@@ -14,7 +14,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://dsa-visuliazer-backend.vercel.app/"
+    "https://pn-dsa-visuliazer.vercel.app/"
   ],
   credentials: true
 }));

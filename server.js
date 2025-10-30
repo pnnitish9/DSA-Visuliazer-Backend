@@ -12,10 +12,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors({ 
-  origin: [
-    "https://pn-dsa-visuliazer.vercel.app/",
-  ],
-   credentials: true }));
+  origin:"https://pn-dsa-visuliazer.vercel.app/", credentials: true }));
 app.use(bodyParser.json());
 
 // mongoose

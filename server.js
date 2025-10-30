@@ -11,12 +11,24 @@ import { validateRegister,validateLogin } from "./validators/authValidator.js";
 dotenv.config();
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://pn-dsa-visuliazer.vercel.app"
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://pn-dsa-visuliazer.vercel.app/"
-  ],
-  credentials: true
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      console.warn("Blocked CORS for origin:", origin);
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 }));
 app.use(bodyParser.json());
 

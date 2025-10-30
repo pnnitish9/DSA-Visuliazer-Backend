@@ -21,14 +21,15 @@ app.use(bodyParser.json());
 
 let isConnected = false;
 async function ConnectedToDB() {
-  try{
-    await mongoose.connect(process.env.MONGO_URI, {dbName: "DSAVisualizer", useNewUrlParse:true,useUnifiedTopology:true});
-    isConnected = true;
-    console.log("Connected to DB");
-  }
-  catch(err){
-    console.log("Error: "+err.message);
-  }
+      mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
+    .then(() => {
+      isConnected = true
+      console.log("MongoDB Connected")
+    })
+    .catch(err => console.error("MongoDB Connection Error:", err));
 }
 
 // middleware 

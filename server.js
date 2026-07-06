@@ -38,17 +38,28 @@ app.use(bodyParser.json());
 //   .catch((err) => console.error("MongoDB connection error:", err));
 
 let isConnected = false;
+
 async function ConnectedToDB() {
-      mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
-    .then(() => {
-      isConnected = true
-      console.log("MongoDB Connected")
-    })
-    .catch(err => console.error("MongoDB Connection Error:", err));
+  if (isConnected) return;
+
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    isConnected = true;
+    console.log("MongoDB Connected");
+  } catch (err) {
+    console.error("MongoDB Connection Error:", err);
+    throw err;
+  }
 }
+
+app.use(async (req, res, next) => {
+  try {
+    await ConnectedToDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ message: "Database connection failed" });
+  }
+});
 
 // middleware 
 app.use((req,res,next)=>{

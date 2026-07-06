@@ -111,7 +111,7 @@ app.post("/api/register", async (req, res) => {
   try {
     validateRegister(req.body);
 
-    const { name, email, password } = req.body;
+    const { name, gender, dob, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -125,6 +125,8 @@ app.post("/api/register", async (req, res) => {
 
     const user = await User.create({
       name,
+      gender,
+      dob,
       email,
       password: hashedPassword,
     });
@@ -234,10 +236,12 @@ app.get("/api/useraccount", verifyToken, async (req, res) => {
 
 app.put("/api/useraccount", verifyToken, async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, gender, dob, email, password } = req.body;
 
     const updates = {
       name,
+      gender,
+      dob,
       email,
     };
 

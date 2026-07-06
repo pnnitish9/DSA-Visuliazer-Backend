@@ -11,20 +11,6 @@ export function validateRegister(data) {
     throw new Error("Name must be at least 3 characters long");
   }
 
-  // gender
-  const validGenders = ["male", "female", "other"];
-  if (!data.gender || !validGenders.includes(data.gender)) {
-    throw new Error("Gender must be Male, Female, or Other");
-  }
-
-  // dob
-  if (!data.dob || validator.isEmpty(data.dob)) {
-    throw new Error("Date of birth is required");
-  }
-  if (!validator.isDate(data.dob)) {
-    throw new Error("Date of birth must be a valid date (YYYY-MM-DD)");
-  }
-
   // email
   if (!data.email || validator.isEmpty(data.email)) {
     throw new Error("Email is required");
